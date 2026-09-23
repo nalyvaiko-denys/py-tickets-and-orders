@@ -5,10 +5,10 @@ from django.contrib.auth.models import AbstractUser
 def create_user(
     username: str,
     password: str,
-    email: str = None,
-    first_name: str = None,
-    last_name: str = None,
-) -> str:
+    email: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+) -> AbstractUser:
     return get_user_model().objects.create_user(
         username=username,
         password=password,
@@ -18,19 +18,25 @@ def create_user(
     )
 
 
-def get_user(user_id: int) -> AbstractUser:
-    return get_user_model().objects.get(id=user_id)
+def get_user(
+    user_id: int,
+) -> AbstractUser:
+    return get_user_model().objects.get(
+        id=user_id
+    )
 
 
 def update_user(
     user_id: int,
-    username: str = None,
-    password: str = None,
-    email: str = None,
-    first_name: str = None,
-    last_name: str = None,
-) -> None:
-    user = get_user_model().objects.get(id=user_id)
+    username: str | None = None,
+    password: str | None = None,
+    email: str | None = None,
+    first_name: str | None = None,
+    last_name: str | None = None,
+) -> AbstractUser:
+    user = get_user_model().objects.get(
+        id=user_id
+    )
 
     if username is not None:
         user.username = username

@@ -9,14 +9,20 @@ from db.models import Order, Ticket
 def create_order(
     tickets: list[dict],
     username: str,
-    date: str = None,
+    date: str | None = None,
 ) -> Order:
-    user = get_user_model().objects.get(username=username)
+    user = get_user_model().objects.get(
+        username=username
+    )
 
-    order = Order.objects.create(user=user)
+    order = Order.objects.create(
+        user=user
+    )
 
     if date:
-        Order.objects.filter(id=order.id).update(
+        Order.objects.filter(
+            id=order.id
+        ).update(
             created_at=date
         )
         order.refresh_from_db()
@@ -33,8 +39,8 @@ def create_order(
 
 
 def get_orders(
-    username: str = None,
-) -> QuerySet:
+    username: str | None = None,
+) -> QuerySet[Order]:
     queryset = Order.objects.all()
 
     if username:
